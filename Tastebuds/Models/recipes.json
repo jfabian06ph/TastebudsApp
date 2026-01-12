@@ -24,7 +24,7 @@
       "id": "2",
       "title": "Vegan Buddha Bowl",
       "description": "A nourishing bowl packed with plant-based goodness.",
-      "servings": 2,
+      "servings": 4,
       "ingredients": [
         "1 cup quinoa",
         "1 cup roasted chickpeas",
@@ -35,8 +35,8 @@
       "instructions": [
         "Cook quinoa according to package instructions.",
         "Roast chickpeas and sweet potatoes.",
-        "Assemble all ingredients in a bowl.",
-        "Drizzle with tahini dressing."
+        "Combine all ingredients in a bowl.",
+        "Combine with tahini dressing."
       ],
       "dietary": ["vegan", "glutenFree"],
       "imageLink": "https://www.recipetineats.com/tachyon/2014/06/Vegetarian-Tofu-Chow-Mein.jpg?resize=680%2C953&zoom=0.95"
@@ -66,7 +66,7 @@
       "id": "4",
       "title": "Avocado Toast",
       "description": "A simple yet satisfying breakfast favorite.",
-      "servings": 1,
+      "servings": 4,
       "ingredients": [
         "2 slices bread",
         "1 ripe avocado",

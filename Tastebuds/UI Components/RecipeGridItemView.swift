@@ -54,7 +54,9 @@ struct RecipeGridItemView: View {
 
                 HStack {
                     if recipe.dietary.contains(.vegetarian) {
-                        Text("🌱")
+                        Text("🌱 Veggie good")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.8))
                     }
                     Spacer()
                     Text("\(recipe.servings) servings")

@@ -11,8 +11,8 @@ import SDWebImageSwiftUI
 struct RecipeDetailView: View {
     @StateObject private var viewModel: RecipeDetailViewModel
 
-    init(recipeId: String) {
-        _viewModel = StateObject(wrappedValue: RecipeDetailViewModel(recipeId: recipeId))
+    init(recipeId: String, highlightedString: String? = nil) {
+        _viewModel = StateObject(wrappedValue: RecipeDetailViewModel(recipeId: recipeId, highlightedString: highlightedString))
     }
 
     var body: some View {
@@ -126,7 +126,7 @@ extension RecipeDetailView {
                         Image(systemName: viewModel.checkedIngredients.contains(ingredient)
                             ? "checkmark.circle.fill"
                         : "circle")
-                            .foregroundColor(viewModel.checkedIngredients.contains(ingredient) ? .darkOrange : .secondaryBrandColor)
+                            .foregroundColor(viewModel.checkedIngredients.contains(ingredient) ? .darkOrange : .primaryBrandColor)
                         Text(ingredient)
                             .strikethrough(viewModel.checkedIngredients.contains(ingredient))
                             .foregroundColor(viewModel.checkedIngredients.contains(ingredient) ? .secondary : .primary)
@@ -161,8 +161,7 @@ extension RecipeDetailView {
                     }
 
                     // Instruction text
-                    Text(instruction)
-                        .foregroundColor(.primary)
+                    Text(viewModel.highlightedInstruction(instruction))
                         .multilineTextAlignment(.leading)
                 }.padding(.vertical, 2)
                     .listRowBackground(Color.adaptiveAccent)
