@@ -11,6 +11,7 @@ import Combine
 final class RecipeDetailViewModel: ObservableObject {
     @Published var recipe: Recipe?
     @Published var isLoading: Bool = false
+    @Published var checkedIngredients: Set<String> = []
 
     private let service: RecipeDetailsRepository
     private let recipeId: String
@@ -26,7 +27,19 @@ final class RecipeDetailViewModel: ObservableObject {
 
         // Artificial delay for mock loading
         try? await Task.sleep(nanoseconds: 1000_000_000)
-        
+
         recipe = await service.fetchRecipe(id: recipeId)
+    }
+
+    func toggleIngredient(_ ingredient: String) {
+        if checkedIngredients.contains(ingredient) {
+            checkedIngredients.remove(ingredient)
+        } else {
+            checkedIngredients.insert(ingredient)
+        }
+    }
+
+    func isIngredientChecked(_ ingredient: String) -> Bool {
+        checkedIngredients.contains(ingredient)
     }
 }

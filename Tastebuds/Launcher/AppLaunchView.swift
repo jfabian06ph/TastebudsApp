@@ -22,8 +22,7 @@ struct AppLaunchView: View {
                 SplashView()
                     .transition(.opacity)
             }
-        }
-        .onAppear {
+        }.onAppear {
             // Hide splash after 2 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation(.easeInOut(duration: 0.5)) {

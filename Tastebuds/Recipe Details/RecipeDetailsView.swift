@@ -10,19 +10,25 @@ import SDWebImageSwiftUI
 
 struct RecipeDetailView: View {
     @StateObject private var viewModel: RecipeDetailViewModel
-    @State private var checkedIngredients: Set<String> = []
 
     init(recipeId: String) {
         _viewModel = StateObject(wrappedValue: RecipeDetailViewModel(recipeId: recipeId))
     }
 
     var body: some View {
+        //TODO: Add share recipe
         content()
             .background(Color.adaptiveAccent)
             .task {
             await viewModel.loadRecipe()
-        }.navigationTitle("Recipe")
-            .navigationBarTitleDisplayMode(.inline)
+        }.navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Chef’s Notes")
+                    .font(.title2.bold())
+                    .foregroundColor(.primaryBrandColor)
+            }
+        }
     }
 
     @ViewBuilder func header() -> some View {
@@ -79,80 +85,93 @@ struct RecipeDetailView: View {
             }.padding(12)
         }.frame(height: 180)
             .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
     }
 
     @ViewBuilder func content() -> some View {
         if viewModel.isLoading {
-            VStack(spacing: 16) {
-                Text("Fetching flavors…")
-                    .font(.headline)
-                ProgressView()
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.adaptiveAccent)
+            progressRowContent()
         } else {
             List {
                 header()
-                    .listRowSeparator(.hidden)
-                Section(header: VStack(alignment: .leading, spacing: 4) {
-                    Text("Ingredients")
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                    Text("Tap the items to keep track of what’s ready")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }.background(Color.adaptiveAccent)) {
-                    ForEach(viewModel.recipe?.ingredients ?? [], id: \.self) { ingredient in
-                        Button {
-                            toggleIngredient(ingredient)
-                        } label: {
-                            HStack {
-                                Image(systemName: checkedIngredients.contains(ingredient)
-                                    ? "checkmark.circle.fill"
-                                : "circle")
-                                    .foregroundColor(checkedIngredients.contains(ingredient) ? .darkOrange : .secondaryBrandColor)
-                                Text(ingredient)
-                                    .strikethrough(checkedIngredients.contains(ingredient))
-                                    .foregroundColor(checkedIngredients.contains(ingredient) ? .secondary : .primary)
-                            }.contentShape(Rectangle())
-                        }
-                            .buttonStyle(.plain)
-                            .listRowBackground(Color.adaptiveAccent)
-                    }
-                }
-
-                Section(header: Text("Cooking instructions")
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                    .background(Color.adaptiveAccent)) {
-                    ForEach(Array(viewModel.recipe?.instructions.enumerated() ?? [].enumerated()), id: \.offset) { index, instruction in
-                        HStack(alignment: .top, spacing: 8) {
-                            // Number in circle
-                            ZStack {
-                                Circle()
-                                    .fill(Color.darkOrange)
-                                    .frame(width: 24, height: 24)
-                                Text("\(index + 1)")
-                                    .font(.caption)
-                                    .foregroundColor(Color.white)
-                            }
-
-                            // Instruction text
-                            Text(instruction)
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.leading)
-                        }.padding(.vertical, 2)
-                            .background(Color.adaptiveAccent)
-                    }
-                }.listRowBackground(Color.adaptiveAccent)
+                ingredientsSection()
+                instructionSection()
             }.listStyle(.plain)
         }
     }
+}
 
-    private func toggleIngredient(_ ingredient: String) {
-        if checkedIngredients.contains(ingredient) {
-            checkedIngredients.remove(ingredient)
-        } else {
-            checkedIngredients.insert(ingredient)
+// MARK: Content View
+extension RecipeDetailView {
+    @ViewBuilder func progressRowContent() -> some View {
+        VStack(spacing: 16) {
+            Text("Fetching flavors…")
+                .font(.headline)
+                .foregroundColor(.primary)
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle())
+                .scaleEffect(1.5)
+                .padding(.top, 12)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.adaptiveAccent)
+    }
+
+    @ViewBuilder func ingredientsSection() -> some View {
+        Section {
+            ForEach(viewModel.recipe?.ingredients ?? [], id: \.self) { ingredient in
+                Button {
+                    viewModel.toggleIngredient(ingredient)
+                } label: {
+                    HStack {
+                        Image(systemName: viewModel.checkedIngredients.contains(ingredient)
+                            ? "checkmark.circle.fill"
+                        : "circle")
+                            .foregroundColor(viewModel.checkedIngredients.contains(ingredient) ? .darkOrange : .secondaryBrandColor)
+                        Text(ingredient)
+                            .strikethrough(viewModel.checkedIngredients.contains(ingredient))
+                            .foregroundColor(viewModel.checkedIngredients.contains(ingredient) ? .secondary : .primary)
+                    }.contentShape(Rectangle())
+                }.buttonStyle(.plain)
+                    .listRowBackground(Color.adaptiveAccent)
+            }
+        } header: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Ingredients")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text("Tap the items to keep track of what’s ready")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }.background(Color.adaptiveAccent)
+        }
+    }
+
+    @ViewBuilder func instructionSection() -> some View {
+        Section {
+            ForEach(Array(viewModel.recipe?.instructions.enumerated() ?? [].enumerated()), id: \.offset) { index, instruction in
+                HStack(alignment: .top, spacing: 8) {
+                    // Number in circle
+                    ZStack {
+                        Circle()
+                            .fill(Color.darkOrange)
+                            .frame(width: 24, height: 24)
+                        Text("\(index + 1)")
+                            .font(.caption)
+                            .foregroundColor(Color.white)
+                    }
+
+                    // Instruction text
+                    Text(instruction)
+                        .foregroundColor(.primary)
+                        .multilineTextAlignment(.leading)
+                }.padding(.vertical, 2)
+                    .listRowBackground(Color.adaptiveAccent)
+            }
+        } header: {
+            Text("Cooking instructions")
+                .font(.headline)
+                .foregroundColor(.primary)
+                .background(Color.adaptiveAccent)
         }
     }
 }

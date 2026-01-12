@@ -9,21 +9,24 @@ import SwiftUI
 
 struct SplashView: View {
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Tastebuds")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
+        VStack {
+            Image("brandLogo")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+                .frame(height: 150)
+                .clipped()
+                .padding(.horizontal, 16)
             Text("Find recipes your tastebuds will love.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
+                .font(.headline)
+                .foregroundColor(.primary)
+                .padding(.top, -20)
             ProgressView()
                 .progressViewStyle(CircularProgressViewStyle())
                 .scaleEffect(1.5)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.adaptiveAccent)
+                .padding(.top, 16)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.adaptiveAccent)
     }
 }
 

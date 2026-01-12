@@ -18,8 +18,8 @@ extension Color {
     
     static let primaryBrandColor = Color(UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .dark
-            ? UIColor(red: 255/255, green: 85/255, blue: 0/255, alpha: 1)
-            : .white
+            ? UIColor(red: 255/255, green: 185/255, blue: 150/255, alpha: 1)
+            : UIColor(red: 255/255, green: 85/255, blue: 0/255, alpha: 1)
     })
     
     static let secondaryBrandColor = Color(UIColor { traitCollection in
