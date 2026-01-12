@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Color {
-    static let darkOrange = Color(UIColor(red: 255/255, green: 85/255, blue: 0/255, alpha: 1))
+    static let darkOrange = Color(UIColor(red: 255/255, green: 85/255, blue: 0/255, alpha: 1)) // HEX: #080820
     
     static let adaptiveAccent = Color(UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .dark
@@ -18,7 +18,7 @@ extension Color {
     
     static let primaryBrandColor = Color(UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .dark
-            ? UIColor(red: 255/255, green: 85/255, blue: 0/255, alpha: 1) // HEX: #080820
+            ? UIColor(red: 255/255, green: 85/255, blue: 0/255, alpha: 1)
             : .white
     })
     
