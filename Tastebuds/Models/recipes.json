@@ -1,0 +1,209 @@
+{
+  "recipes": [
+    {
+      "id": "1",
+      "title": "Vegetarian Pasta",
+      "description": "A quick and healthy pasta dish.",
+      "servings": 2,
+      "ingredients": [
+        "200g pasta",
+        "2 cloves garlic",
+        "1 cup cherry tomatoes",
+        "Olive oil"
+      ],
+      "instructions": [
+        "Boil the pasta until al dente.",
+        "Sauté garlic in olive oil.",
+        "Add tomatoes and cook briefly.",
+        "Combine pasta and sauce."
+      ],
+      "dietary": ["vegetarian", "vegan"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2018/09/One-Pot-Vegetable-Pasta_5.jpg?resize=900%2C1125&zoom=0.72"
+    },
+    {
+      "id": "2",
+      "title": "Vegan Buddha Bowl",
+      "description": "A nourishing bowl packed with plant-based goodness.",
+      "servings": 2,
+      "ingredients": [
+        "1 cup quinoa",
+        "1 cup roasted chickpeas",
+        "1 avocado",
+        "Roasted sweet potatoes",
+        "Tahini dressing"
+      ],
+      "instructions": [
+        "Cook quinoa according to package instructions.",
+        "Roast chickpeas and sweet potatoes.",
+        "Assemble all ingredients in a bowl.",
+        "Drizzle with tahini dressing."
+      ],
+      "dietary": ["vegan", "glutenFree"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2014/06/Vegetarian-Tofu-Chow-Mein.jpg?resize=680%2C953&zoom=0.95"
+    },
+    {
+      "id": "3",
+      "title": "Gluten-Free Pancakes",
+      "description": "Fluffy pancakes made with gluten-free flour.",
+      "servings": 4,
+      "ingredients": [
+        "1 1/2 cups gluten-free flour",
+        "2 eggs",
+        "1 cup milk",
+        "1 tbsp baking powder",
+        "Maple syrup"
+      ],
+      "instructions": [
+        "Mix dry ingredients in a bowl.",
+        "Whisk in eggs and milk.",
+        "Cook batter on a hot skillet.",
+        "Serve with maple syrup."
+      ],
+      "dietary": ["glutenFree"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2016/03/Ricotta-pancakes_0-1.jpg?resize=900%2C1125&zoom=0.72"
+    },
+    {
+      "id": "4",
+      "title": "Avocado Toast",
+      "description": "A simple yet satisfying breakfast favorite.",
+      "servings": 1,
+      "ingredients": [
+        "2 slices bread",
+        "1 ripe avocado",
+        "Salt",
+        "Black pepper",
+        "Chili flakes"
+      ],
+      "instructions": [
+        "Toast the bread.",
+        "Mash avocado with salt and pepper.",
+        "Spread avocado on toast.",
+        "Sprinkle chili flakes on top."
+      ],
+      "dietary": ["vegetarian"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2025/12/Coquilles-Saint-Jacques_7-1.jpg?resize=1200%2C1500&zoom=0.54"
+    },
+    {
+      "id": "5",
+      "title": "Vegan Lentil Soup",
+      "description": "A hearty soup perfect for cozy evenings.",
+      "servings": 4,
+      "ingredients": [
+        "1 cup lentils",
+        "1 onion",
+        "2 carrots",
+        "3 cups vegetable broth",
+        "Garlic"
+      ],
+      "instructions": [
+        "Sauté onion and garlic.",
+        "Add lentils, carrots, and broth.",
+        "Simmer until lentils are tender.",
+        "Season to taste."
+      ],
+      "dietary": ["vegan", "glutenFree"]
+    },
+    {
+      "id": "6",
+      "title": "Caprese Salad",
+      "description": "A fresh Italian salad with tomatoes and mozzarella.",
+      "servings": 2,
+      "ingredients": [
+        "Fresh tomatoes",
+        "Mozzarella cheese",
+        "Fresh basil",
+        "Olive oil",
+        "Balsamic glaze"
+      ],
+      "instructions": [
+        "Slice tomatoes and mozzarella.",
+        "Layer with basil leaves.",
+        "Drizzle with olive oil and balsamic glaze.",
+        "Season with salt."
+      ],
+      "dietary": ["vegetarian", "glutenFree"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2021/02/Salade-Nicoise-v2_3.jpg?resize=900%2C1260&zoom=0.72"
+    },
+    {
+      "id": "7",
+      "title": "Stir-Fried Vegetables",
+      "description": "Colorful vegetables tossed in a savory sauce.",
+      "servings": 3,
+      "ingredients": [
+        "Broccoli florets",
+        "Bell peppers",
+        "Snap peas",
+        "Soy sauce",
+        "Sesame oil"
+      ],
+      "instructions": [
+        "Heat oil in a wok.",
+        "Add vegetables and stir-fry.",
+        "Add soy sauce and toss well.",
+        "Serve hot."
+      ],
+      "dietary": ["vegan"],
+    },
+    {
+      "id": "8",
+      "title": "Gluten-Free Chicken Rice",
+      "description": "A comforting rice dish with tender chicken.",
+      "servings": 4,
+      "ingredients": [
+        "Chicken thighs",
+        "2 cups rice",
+        "Garlic",
+        "Chicken broth",
+        "Spring onions"
+      ],
+      "instructions": [
+        "Sauté garlic and chicken.",
+        "Add rice and broth.",
+        "Cook until rice is tender.",
+        "Garnish with spring onions."
+      ],
+      "dietary": ["glutenFree"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2019/09/Chicken-fried-rice-copy.jpg?resize=900%2C1260&zoom=0.72"
+    },
+    {
+      "id": "9",
+      "title": "Vegetarian Fried Rice",
+      "description": "A quick and flavorful rice dish.",
+      "servings": 3,
+      "ingredients": [
+        "Cooked rice",
+        "Mixed vegetables",
+        "Eggs",
+        "Soy sauce",
+        "Green onions"
+      ],
+      "instructions": [
+        "Scramble eggs in a pan.",
+        "Add vegetables and rice.",
+        "Stir in soy sauce.",
+        "Garnish with green onions."
+      ],
+      "dietary": ["vegetarian"],
+      "imageLink": "https://www.recipetineats.com/tachyon/2020/01/Cauliflower-Fried-Rice_4.jpg?resize=900%2C1260&zoom=0.72"
+    },
+    {
+      "id": "10",
+      "title": "Vegan Chia Pudding",
+      "description": "A creamy and healthy make-ahead breakfast.",
+      "servings": 2,
+      "ingredients": [
+        "1/4 cup chia seeds",
+        "1 cup almond milk",
+        "Maple syrup",
+        "Fresh berries"
+      ],
+      "instructions": [
+        "Mix chia seeds with almond milk.",
+        "Sweeten with maple syrup.",
+        "Refrigerate overnight.",
+        "Top with fresh berries."
+      ],
+      "dietary": ["vegan", "glutenFree"],
+    }
+  ]
+}
