@@ -73,6 +73,7 @@ import Combine
     }
 }
 
+// MARK: - Filters and Search
 extension RecipeListViewModel {
     func setupDebouncer() {
         Publishers.CombineLatest4(
@@ -127,15 +128,6 @@ extension RecipeListViewModel {
         isShowingEmptyState = filteredRecipes.isEmpty
     }
 
-    func snippet(for recipe: Recipe) -> String? {
-        guard !searchQuery.isEmpty else { return nil }
-        return recipe.instructions.first { $0.localizedCaseInsensitiveContains(searchQuery) }
-    }
-
-    var hasSnippet: Bool {
-        !searchQuery.isEmpty
-    }
-
     func handleFilterUpdate(filterType: FilterType, options: [FilterOption]) {
         switch filterType {
         case .servings:
@@ -164,5 +156,31 @@ extension RecipeListViewModel {
         loadAgrregationValues()
         applyFilters()
         isShowingEmptyState = false
+    }
+}
+
+// MARK: - Text Snippets
+extension RecipeListViewModel {
+    func snippet(for recipe: Recipe) -> String? {
+        guard !searchQuery.isEmpty else { return nil }
+        return recipe.instructions.first { $0.localizedCaseInsensitiveContains(searchQuery) }
+    }
+
+    var hasSnippet: Bool {
+        !searchQuery.isEmpty
+    }
+}
+
+// MARK: - Helper functions for Ingredient Filter
+extension RecipeListViewModel {
+    var selectedIngredientsCount: Int {
+        guard let filter = ingredientsFilter else { return 0 }
+        let included = filter.included.filter(\.isSelected).count
+        let excluded = filter.excluded.filter(\.isSelected).count
+        return included + excluded
+    }
+
+    var hasSelectedIngredients: Bool {
+        selectedIngredientsCount > 0
     }
 }

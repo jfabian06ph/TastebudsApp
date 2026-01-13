@@ -4,6 +4,7 @@
 //
 //  Created by Joseph Z. Fabian on 1/13/26.
 //
+
 import SwiftUI
 
 struct FilterDetailView: View {

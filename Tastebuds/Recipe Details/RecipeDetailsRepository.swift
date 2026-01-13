@@ -13,7 +13,6 @@ final class RecipeDetailsRepository {
               let data = try? Data(contentsOf: url),
               let decoded = try? JSONDecoder().decode(RecipeResponse.self, from: data)
         else { return nil }
-
         return decoded.recipes.first { $0.id == id }
     }
 }

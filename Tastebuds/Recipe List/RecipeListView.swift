@@ -115,11 +115,7 @@ extension RecipeListView {
                     activeFilter = viewModel.servingsFilter
                 }
 
-                let includedCount = viewModel.ingredientsFilter?.included.filter(\.isSelected).count ?? 0
-                let excludedCount = viewModel.ingredientsFilter?.excluded.filter(\.isSelected).count ?? 0
-                let totalCount = includedCount + excludedCount
-
-                FilterChip(title: "Ingredients", isSelected: totalCount > 0, selectedCount: totalCount) {
+                FilterChip(title: "Ingredients", isSelected: viewModel.hasSelectedIngredients, selectedCount: viewModel.selectedIngredientsCount) {
                     activeIngredientFilter = viewModel.ingredientsFilter
                 }
             }.padding(.horizontal, 16)

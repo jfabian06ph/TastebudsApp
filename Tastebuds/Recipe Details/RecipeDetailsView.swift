@@ -35,7 +35,10 @@ struct RecipeDetailView: View {
             }
         }
     }
+}
 
+// MARK: View contents
+extension RecipeDetailView {
     @ViewBuilder func header() -> some View {
         ZStack(alignment: .bottomLeading) {
             if let imageLink = viewModel.recipe?.imageLink, let url = URL(string: imageLink) {
@@ -108,10 +111,7 @@ struct RecipeDetailView: View {
             }
         }
     }
-}
-
-// MARK: Content View
-extension RecipeDetailView {
+    
     @ViewBuilder func progressRowContent() -> some View {
         VStack(spacing: 16) {
             Text("Fetching flavors… 🍅🧄🥕🥘")
@@ -132,9 +132,7 @@ extension RecipeDetailView {
                     viewModel.toggleIngredient(ingredient)
                 } label: {
                     HStack {
-                        Image(systemName: viewModel.checkedIngredients.contains(ingredient)
-                            ? "checkmark.circle.fill"
-                        : "circle")
+                        Image(systemName: viewModel.checkedIngredients.contains(ingredient) ? "checkmark.circle.fill" : "circle")
                             .foregroundColor(viewModel.checkedIngredients.contains(ingredient) ? .darkOrange : .primaryBrandColor)
                         Text(ingredient)
                             .strikethrough(viewModel.checkedIngredients.contains(ingredient))
@@ -224,13 +222,16 @@ extension RecipeDetailView {
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
         } header: {
-            Text("Chef’s Note")
+            Text("Chef’s note")
                 .font(.headline)
                 .foregroundColor(.primary)
         }
     }
+}
 
-    // MARK: - Persistence
+// MARK: View actions
+extension RecipeDetailView {
+    // MARK: - Simple Persistence
     private func loadNote() {
         let key = "chefsNote_\(viewModel.recipeId)"
         chefsNote = UserDefaults.standard.string(forKey: key) ?? ""
@@ -240,4 +241,9 @@ extension RecipeDetailView {
         let key = "chefsNote_\(viewModel.recipeId)"
         UserDefaults.standard.set(chefsNote, forKey: key)
     }
+}
+
+#Preview {
+    RecipeDetailView(recipeId: "1")
+        .padding()
 }

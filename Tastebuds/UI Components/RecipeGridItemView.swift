@@ -24,10 +24,10 @@ struct RecipeGridItemView: View {
                     .clipped()
             } else {
                 Image("webImagePlaceholder")
-                       .resizable()
-                       .scaledToFill()
-                       .frame(height: 180)
-                       .clipped()
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 180)
+                    .clipped()
             }
 
             // Bottom gradient
@@ -69,8 +69,6 @@ struct RecipeGridItemView: View {
     }
 }
 
-
-
 #Preview {
     RecipeGridItemView(recipe: Recipe(id: "1",
                                       title: "Vegetarian Pasta",
@@ -85,6 +83,5 @@ struct RecipeGridItemView: View {
                                                      "Add tomatoes and cook briefly.",
                                                      "Combine pasta and sauce."],
                                       dietary: [.vegetarian],
-                                      imageLink: nil)
-    ).padding()
+                                      imageLink: nil)).padding()
 }

@@ -10,15 +10,18 @@ import Foundation
 import SwiftUI
 
 @MainActor final class RecipeDetailViewModel: ObservableObject {
+    // MARK: Data
     @Published var recipe: Recipe?
     @Published var isLoading: Bool = false
     @Published var checkedIngredients: Set<String> = []
     @Published var highlightedString: String? = nil
     @Published var allIngredientsChecked: Bool = false
-
-    private let service: RecipeDetailsRepository
     let recipeId: String
 
+    // MARK: Repository
+    private let service: RecipeDetailsRepository
+
+    // MARK: Lifecycle
     init(recipeId: String, highlightedString: String? = nil, service: RecipeDetailsRepository? = nil) {
         self.recipeId = recipeId
         self.highlightedString = highlightedString
@@ -35,6 +38,7 @@ import SwiftUI
         recipe = await service.fetchRecipe(id: recipeId)
     }
 
+    // MARK: Helper functions for Ingredients
     func toggleIngredient(_ ingredient: String) {
         if checkedIngredients.contains(ingredient) {
             checkedIngredients.remove(ingredient)
@@ -50,6 +54,7 @@ import SwiftUI
         checkedIngredients.contains(ingredient)
     }
 
+    // MARK: Helper functions for Instructions
     /// Returns AttributedString with highlight if `highlightedString` exists
     func highlightedInstruction(_ instruction: String) -> AttributedString {
         var attributed = AttributedString(instruction)
@@ -63,18 +68,5 @@ import SwiftUI
             }
         }
         return attributed
-    }
-}
-
-extension String {
-    func ranges(of search: String) -> [Range<String.Index>] {
-        var ranges: [Range<String.Index>] = []
-        var startIndex = self.startIndex
-        while startIndex < self.endIndex,
-            let range = self[startIndex...].range(of: search, options: .caseInsensitive) {
-            ranges.append(range)
-            startIndex = range.upperBound
-        }
-        return ranges
     }
 }
