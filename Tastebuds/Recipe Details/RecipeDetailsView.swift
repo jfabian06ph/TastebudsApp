@@ -6,27 +6,32 @@
 //
 
 import SwiftUI
+import Foundation
 import SDWebImageSwiftUI
+import SSToastMessage
 
 struct RecipeDetailView: View {
+    // MARK: Data
     @StateObject private var viewModel: RecipeDetailViewModel
+    @State var showToast = false
+    @State private var chefsNote: String = ""
 
+    // MARK: Lifecycle
     init(recipeId: String, highlightedString: String? = nil) {
         _viewModel = StateObject(wrappedValue: RecipeDetailViewModel(recipeId: recipeId, highlightedString: highlightedString))
     }
 
     var body: some View {
-        //TODO: Add share recipe
-        content()
-            .background(Color.adaptiveAccent)
-            .task {
-            await viewModel.loadRecipe()
-        }.navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("Chef’s Notes")
-                    .font(.title2.bold())
-                    .foregroundColor(.primaryBrandColor)
+        NavigationStack {
+            content()
+                .background(Color.adaptiveAccent)
+                .task {
+                await viewModel.loadRecipe()
+            }.navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                loadNote()
+            }.onChange(of: chefsNote) { _, _ in
+                saveNote()
             }
         }
     }
@@ -49,7 +54,7 @@ struct RecipeDetailView: View {
                     .clipped()
             }
 
-            // Bottom gradient
+            // View gradient
             LinearGradient(
                 gradient: Gradient(colors: [Color.clear, Color.black.opacity(0.9)]),
                 startPoint: .top,
@@ -57,7 +62,7 @@ struct RecipeDetailView: View {
             ).frame(height: 180)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
 
-            // Text content (VStack)
+            // Text content
             VStack(alignment: .leading, spacing: 8) {
                 Text(viewModel.recipe?.title ?? "")
                     .font(.largeTitle)
@@ -96,7 +101,11 @@ struct RecipeDetailView: View {
                 header()
                 ingredientsSection()
                 instructionSection()
+                chefsNoteSection()
             }.listStyle(.plain)
+                .present(isPresented: $viewModel.allIngredientsChecked, type: .toast, position: .bottom, horizontalPadding: 20) {
+                bottomToastView()
+            }
         }
     }
 }
@@ -105,7 +114,7 @@ struct RecipeDetailView: View {
 extension RecipeDetailView {
     @ViewBuilder func progressRowContent() -> some View {
         VStack(spacing: 16) {
-            Text("Fetching flavors…")
+            Text("Fetching flavors… 🍅🧄🥕🥘")
                 .font(.headline)
                 .foregroundColor(.primary)
             ProgressView()
@@ -146,6 +155,26 @@ extension RecipeDetailView {
         }
     }
 
+    func bottomToastView() -> some View {
+        HStack {
+            Spacer()
+            VStack(spacing: 4) {
+                Image(systemName: "sparkles")
+                    .font(.title2)
+                    .foregroundColor(.yellow)
+                Text("Nice! All your ingredients are set.\nLet's get cookin', shall we? 🥄🥗")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.center)
+            }
+            Spacer()
+        }.padding(.vertical, 16)
+            .padding(.horizontal, 16)
+            .background(Color.successToastBackgroundColor)
+            .cornerRadius(12)
+            .shadow(radius: 4)
+    }
+
     @ViewBuilder func instructionSection() -> some View {
         Section {
             ForEach(Array(viewModel.recipe?.instructions.enumerated() ?? [].enumerated()), id: \.offset) { index, instruction in
@@ -172,5 +201,43 @@ extension RecipeDetailView {
                 .foregroundColor(.primary)
                 .background(Color.adaptiveAccent)
         }
+    }
+
+    @ViewBuilder func chefsNoteSection() -> some View {
+        Section {
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $chefsNote)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
+                    .foregroundColor(.primary)
+                    .padding(12)
+                    .font(.body)
+                    .overlay(RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.primaryBrandColor.opacity(0.7), lineWidth: 1))
+
+                if chefsNote.isEmpty {
+                    Text("Chef’s thoughts go here… 👩‍🍳📝")
+                        .foregroundColor(.gray)
+                        .padding(16)
+                }
+            }.frame(minHeight: 120)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+        } header: {
+            Text("Chef’s Note")
+                .font(.headline)
+                .foregroundColor(.primary)
+        }
+    }
+
+    // MARK: - Persistence
+    private func loadNote() {
+        let key = "chefsNote_\(viewModel.recipeId)"
+        chefsNote = UserDefaults.standard.string(forKey: key) ?? ""
+    }
+
+    private func saveNote() {
+        let key = "chefsNote_\(viewModel.recipeId)"
+        UserDefaults.standard.set(chefsNote, forKey: key)
     }
 }

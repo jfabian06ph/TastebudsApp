@@ -34,4 +34,10 @@ extension Color {
             ? UIColor(red: 186/255, green: 186/255, blue: 185/255, alpha: 1) // HEX: #6F6763
             : UIColor(red: 111/255, green: 103/255, blue: 99/255, alpha: 1) // HEX: #BABAB9
     })
+    
+    static let successToastBackgroundColor = Color(UIColor { traitCollection in
+        traitCollection.userInterfaceStyle == .dark
+            ? UIColor(red: 48/255, green: 105/255, blue: 54/255, alpha: 1) // HEX: #306936
+            : UIColor(red: 77/255, green: 160/255, blue: 85/255, alpha: 1) // HEX: #4da055
+    })
 }

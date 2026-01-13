@@ -14,9 +14,10 @@ import SwiftUI
     @Published var isLoading: Bool = false
     @Published var checkedIngredients: Set<String> = []
     @Published var highlightedString: String? = nil
+    @Published var allIngredientsChecked: Bool = false
 
     private let service: RecipeDetailsRepository
-    private let recipeId: String
+    let recipeId: String
 
     init(recipeId: String, highlightedString: String? = nil, service: RecipeDetailsRepository? = nil) {
         self.recipeId = recipeId
@@ -40,6 +41,9 @@ import SwiftUI
         } else {
             checkedIngredients.insert(ingredient)
         }
+
+        guard let ingredients = recipe?.ingredients else { return }
+        allIngredientsChecked = Set(checkedIngredients) == Set(ingredients)
     }
 
     func isIngredientChecked(_ ingredient: String) -> Bool {
@@ -67,7 +71,7 @@ extension String {
         var ranges: [Range<String.Index>] = []
         var startIndex = self.startIndex
         while startIndex < self.endIndex,
-              let range = self[startIndex...].range(of: search, options: .caseInsensitive) {
+            let range = self[startIndex...].range(of: search, options: .caseInsensitive) {
             ranges.append(range)
             startIndex = range.upperBound
         }

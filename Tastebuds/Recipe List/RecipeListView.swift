@@ -15,41 +15,46 @@ struct RecipeListView: View {
     @State private var activeIngredientFilter: IngredientFilter?
 
     var body: some View {
-        filterChips()
-        List(viewModel.filteredRecipes) { recipe in
-            VStack(alignment: .leading, spacing: 4) {
-                recipeRowContent(recipe)
-                instructionSnippet(recipe)
-            }.listRowSeparator(.hidden)
-                .listRowBackground(Color.adaptiveAccent)
-        }.listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(Color.adaptiveAccent)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-            ToolbarItem(placement: .principal) {
-                navigationTitle()
+        VStack(spacing: 0) {
+            filterChips()
+            if viewModel.isShowingEmptyState {
+                emptyState()
             }
-        }.onAppear {
-            Task { await viewModel.loadRecipes() }
-        }.searchable(
-            text: $viewModel.searchQuery,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "Search recipes or cooking instructions"
-        ).sheet(item: $selectedRecipe) { recipe in
-            recipeDetailsView(recipe)
-        }.sheet(item: $activeFilter) { filter in
-            NavigationStack {
-                FilterDetailView(filter: filter) { updatedOptions in
-                    viewModel.handleFilterUpdate(filterType: filter.type, options: updatedOptions)
-                    activeFilter = nil
+            List(viewModel.filteredRecipes) { recipe in
+                VStack(alignment: .leading, spacing: 4) {
+                    recipeRowContent(recipe)
+                    instructionSnippet(recipe)
+                }.listRowSeparator(.hidden)
+                    .listRowBackground(Color.adaptiveAccent)
+            }.listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.adaptiveAccent)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                ToolbarItem(placement: .principal) {
+                    navigationTitle()
                 }
-            }
-        }.sheet(item: $activeIngredientFilter) { filter in
-            NavigationStack {
-                IngredientFilterDetailView(filter: filter) { updatedFilter in
-                    viewModel.ingredientsFilter = updatedFilter
-                    activeIngredientFilter = nil
+            }.onAppear {
+                Task { await viewModel.loadRecipes() }
+            }.searchable(
+                text: $viewModel.searchQuery,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search recipes or cooking instructions"
+            ).sheet(item: $selectedRecipe) { recipe in
+                recipeDetailsView(recipe)
+            }.sheet(item: $activeFilter) { filter in
+                NavigationStack {
+                    FilterDetailView(filter: filter) { updatedOptions in
+                        viewModel.handleFilterUpdate(filterType: filter.type, options: updatedOptions)
+                        activeFilter = nil
+                    }
+                }
+            }.sheet(item: $activeIngredientFilter) { filter in
+                NavigationStack {
+                    IngredientFilterDetailView(filter: filter) { updatedFilter in
+                        viewModel.ingredientsFilter = updatedFilter
+                        activeIngredientFilter = nil
+                    }
                 }
             }
         }
@@ -88,6 +93,16 @@ extension RecipeListView {
     @ViewBuilder private func filterChips() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
+                if viewModel.hasActiveFilters {
+                    Button {
+                        viewModel.clearFilters()
+                    } label: {
+                        Label("Clear", systemImage: "xmark.circle.fill")
+                            .labelStyle(IconOnlyLabelStyle())
+                            .foregroundColor(.primaryBrandColor)
+                    }
+                }
+
                 FilterChip(title: "Dietary",
                            isSelected: viewModel.dietaryFilter?.options.contains(where: \.isSelected) ?? false,
                            selectedCount: viewModel.dietaryFilter?.options.filter({ $0.isSelected }).count) {
@@ -107,17 +122,29 @@ extension RecipeListView {
                 FilterChip(title: "Ingredients", isSelected: totalCount > 0, selectedCount: totalCount) {
                     activeIngredientFilter = viewModel.ingredientsFilter
                 }
-
-                if viewModel.hasActiveFilters {
-                    Button("Clear") {
-                        viewModel.clearFilters()
-                    }.font(.caption.bold())
-                        .foregroundColor(.secondary)
-                }
             }.padding(.horizontal, 16)
                 .padding(.vertical, 8)
         }.listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
+            .background(Color.adaptiveAccent)
+    }
+
+    @ViewBuilder func emptyState() -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "tray")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 80, height: 80)
+                .foregroundColor(.primaryBrandColor)
+            Text("Oops! Nothing to show here…")
+                .font(.headline)
+                .foregroundColor(.primaryBrandColor)
+            Text("Try adjusting your filters or search to find some tasty recipes! 🍳🥗")
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primaryBrandColor)
+                .padding(.horizontal, 32)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.adaptiveAccent)
     }
 }
@@ -125,22 +152,7 @@ extension RecipeListView {
 // MARK: Presented Views
 extension RecipeListView {
     @ViewBuilder func recipeDetailsView(_ recipe: Recipe) -> some View {
-        NavigationStack {
-            RecipeDetailView(recipeId: recipe.id, highlightedString: viewModel.hasSnippet ? viewModel.searchQuery : nil)
-                .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        selectedRecipe = nil
-                    } label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.primaryBrandColor)
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }.accessibilityLabel("Close")
-                        .contentShape(Circle())
-                }
-            }
-        }
+        RecipeDetailView(recipeId: recipe.id, highlightedString: viewModel.hasSnippet ? viewModel.searchQuery : nil)
     }
 }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		43A7F7722F146FC100D90E61 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 43A7F7712F146FC100D90E61 /* SDWebImageSwiftUI */; };
+		43A7F8032F15B93600D90E61 /* SSToastMessage in Frameworks */ = {isa = PBXBuildFile; productRef = 43A7F8022F15B93600D90E61 /* SSToastMessage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43A7F8032F15B93600D90E61 /* SSToastMessage in Frameworks */,
 				43A7F7722F146FC100D90E61 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +128,7 @@
 			name = Tastebuds;
 			packageProductDependencies = (
 				43A7F7712F146FC100D90E61 /* SDWebImageSwiftUI */,
+				43A7F8022F15B93600D90E61 /* SSToastMessage */,
 			);
 			productName = Tastebuds;
 			productReference = 43A7F6A72F145C5200D90E61 /* Tastebuds.app */;
@@ -211,6 +214,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				43A7F72D2F146D7600D90E61 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				43A7F8012F15B8F100D90E61 /* XCRemoteSwiftPackageReference "SSToastMessage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 43A7F6A82F145C5200D90E61 /* Products */;
@@ -605,6 +609,14 @@
 				minimumVersion = 3.1.4;
 			};
 		};
+		43A7F8012F15B8F100D90E61 /* XCRemoteSwiftPackageReference "SSToastMessage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimformSolutionsPvtLtd/SSToastMessage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -612,6 +624,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43A7F72D2F146D7600D90E61 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		43A7F8022F15B93600D90E61 /* SSToastMessage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 43A7F8012F15B8F100D90E61 /* XCRemoteSwiftPackageReference "SSToastMessage" */;
+			productName = SSToastMessage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,5 +1,5 @@
 {
-  "originHash" : "dc7c52e98b03a65b78e76908aa7d9ee94b197e4130d4a3fafb7145206ebf69b8",
+  "originHash" : "ff470fa28d0af63ed7f02faa5d26a6c13c5e5ce094783851fb596a97b6b4e9a7",
   "pins" : [
     {
       "identity" : "sdwebimage",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "0e331457ca9af2f0b08bcaa138a91ffb907b004f",
         "version" : "3.1.4"
+      }
+    },
+    {
+      "identity" : "sstoastmessage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SimformSolutionsPvtLtd/SSToastMessage",
+      "state" : {
+        "revision" : "cd0a4499feca70c7255ad1287da49df42a1bcde0",
+        "version" : "2.0.0"
       }
     }
   ],

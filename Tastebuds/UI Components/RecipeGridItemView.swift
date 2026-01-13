@@ -59,7 +59,7 @@ struct RecipeGridItemView: View {
                             .foregroundColor(.white.opacity(0.8))
                     }
                     Spacer()
-                    Text("\(recipe.servings) servings")
+                    Text("🥣 \(recipe.servings) servings")
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
                 }

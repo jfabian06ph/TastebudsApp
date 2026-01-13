@@ -90,16 +90,16 @@ extension IngredientFilterDetailView {
 extension IngredientFilterDetailView {
     func resetIncludeFilter(_ option: [IngredientOption]) {
         if option.map({ $0.isSelected }).contains(true) {
-            for i in filter.included.indices {
-                filter.included[i].isSelected = false
+            for i in filter.excluded.indices {
+                filter.excluded[i].isSelected = false
             }
         }
     }
     
     func resetExcludeFilter(_ option: [IngredientOption]) {
         if option.map({ $0.isSelected }).contains(true) {
-            for i in filter.excluded.indices {
-                filter.excluded[i].isSelected = false
+            for i in filter.included.indices {
+                filter.included[i].isSelected = false
             }
         }
     }

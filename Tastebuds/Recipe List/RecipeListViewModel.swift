@@ -14,6 +14,7 @@ import Combine
     @Published private(set) var recipes: [Recipe] = []
     @Published var filteredRecipes: [Recipe] = []
     @Published var isLoading = false
+    @Published var isShowingEmptyState = false
 
     // MARK: - Search & Filters
     @Published var searchQuery = ""
@@ -22,7 +23,6 @@ import Combine
     @Published var ingredientsFilter: IngredientFilter?
     @Published var selectedServings: Int? = nil
     @Published var selectedDiets: Set<Dietary> = []
-    @Published var selectedIngredients: Set<String> = []
 
     // MARK: - Repository
     private let service: RecipeListRepository
@@ -122,9 +122,9 @@ extension RecipeListViewModel {
                     }
                 }
             }
-
             return matchesSearch && matchesDietary && matchesServings && matchesIngredients
         }
+        isShowingEmptyState = filteredRecipes.isEmpty
     }
 
     func snippet(for recipe: Recipe) -> String? {
@@ -151,14 +151,18 @@ extension RecipeListViewModel {
     }
 
     var hasActiveFilters: Bool {
-        selectedServings != nil || !selectedDiets.isEmpty
+        let hasServings = selectedServings != nil
+        let hasDiet = !selectedDiets.isEmpty
+        let hasIngredients = (ingredientsFilter?.included.contains(where: \.isSelected) ?? false) ||
+                             (ingredientsFilter?.excluded.contains(where: \.isSelected) ?? false)
+        return hasServings || hasDiet || hasIngredients
     }
 
-    // Reset all filters
     func clearFilters() {
         selectedServings = nil
         selectedDiets = []
         loadAgrregationValues()
         applyFilters()
+        isShowingEmptyState = false
     }
 }
